@@ -23,6 +23,10 @@ public class CellController : MonoBehaviour
 
 	private uint CurrentStage;
 
+	public string CellName = "Cell_Rhombus";
+
+	public Vector3 InitPos = new Vector3(0.0f, -5.0f, 1.0f);
+
 	public void CreateCell(string CellName)
 	{
 		if ((CurrentStage & 1) == 1)
@@ -50,7 +54,7 @@ public class CellController : MonoBehaviour
 					break;
 				}
 			}
-			ThisCell.transform.position = new Vector3(0.0f, -5.0f, 1.0f);
+			ThisCell.transform.position = InitPos;
 		}
 		else
 		{
@@ -67,7 +71,7 @@ public class CellController : MonoBehaviour
                 ThisChild.name = (CellNum * 2 - 1).ToString();
                 ThisChild.GetComponent<SpriteRenderer>().sortingOrder = CellNum;
 
-                NewCell.transform.position = new Vector3(0.0f, -5.0f, 1.0f);
+                NewCell.transform.position = InitPos;
                 NewCell.tag = "TheCell";
 
 				//加入到缓存池中
@@ -126,7 +130,7 @@ public class CellController : MonoBehaviour
 
         PreMousePos = Vector3.zero;
 
-		CreateCell("Cell_Rhombus");
+		CreateCell(CellName);
 	}
 	
 	private float GetRound(float Pos)

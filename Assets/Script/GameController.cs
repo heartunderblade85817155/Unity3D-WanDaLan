@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour 
 {
@@ -21,6 +22,10 @@ public class GameController : MonoBehaviour
 	private GameObject TheGoal = null;
 	public float AppearTime = 1.0f;
 	private float AppearTotalTime = 0.0f;
+
+	public Vector2 WeiTiao = Vector2.zero;
+
+	public int NextMission;
 
 	public uint GetCurrentStage()
 	{
@@ -77,6 +82,8 @@ public class GameController : MonoBehaviour
 
 			for (int i = 1; i < CellList.Count; ++i)
 			{
+				Debug.Log(CellList[0].name + "asdasdasd" + CellList[i].name);
+
 				Vector3 tmp = CellList[i].transform.position - CellList[0].transform.position;
 
 				for (int j = 0; j < HowToWin.Count; ++j)
@@ -110,7 +117,7 @@ public class GameController : MonoBehaviour
 
 			TheGoal = Instantiate(GoalTarget);
 
-			TheGoal.transform.position = new Vector3(CenterPos.x, CenterPos.y, 0.0f);
+			TheGoal.transform.position = new Vector3(CenterPos.x + WeiTiao.x, CenterPos.y + WeiTiao.y, 0.0f);
 
 			Color tmp = TheGoal.GetComponent<SpriteRenderer>().color;
 			tmp.a = 0.0f;
@@ -134,6 +141,8 @@ public class GameController : MonoBehaviour
 				}
 
 				CurrentStage |= 1<<2;
+
+				SceneManager.LoadScene(NextMission);
 			}
 
 			tmp = TheGoal.GetComponent<SpriteRenderer>().color;
