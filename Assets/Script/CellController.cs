@@ -27,6 +27,8 @@ public class CellController : MonoBehaviour
 
 	public Vector3 InitPos = new Vector3(0.0f, -5.0f, 1.0f);
 
+	private bool OpenOpration;
+
 	public void CreateCell(string CellName)
 	{
 		if ((CurrentStage & 1) == 1)
@@ -126,6 +128,8 @@ public class CellController : MonoBehaviour
 	{
 		CellNum = 0;
 
+		OpenOpration = true;
+
         Moved = false;
 
         PreMousePos = Vector3.zero;
@@ -187,6 +191,11 @@ public class CellController : MonoBehaviour
 
 		if (Input.GetMouseButton(0))
 		{
+			if (!OpenOpration)
+			{
+				return;
+			}
+
 			if (!MoveCell)
 			{
 				//如果使用透视矩阵，需要深度值
@@ -214,11 +223,13 @@ public class CellController : MonoBehaviour
                     {
                         CopyRemote = hit.collider.transform.parent.gameObject;
                         CopyRemote.GetComponent<CopyController>().ShowOn();
+						OpenOpration = false;
                     }
                     else if (hit.collider.gameObject.tag.Equals("Delete"))
                     {
                         CopyRemote = hit.collider.transform.parent.gameObject;
                         CopyRemote.GetComponent<DeleteController>().ShowOn();
+						OpenOpration = false;
                     }
                     return ;
 				}
@@ -248,7 +259,7 @@ public class CellController : MonoBehaviour
 			{
 				if (MoveCell)
 				{
-                    MoveCell.GetComponent<MoveByMouse>().ChangeCanMove();
+                    MoveCell.GetComponent<MoveByMouse>().SetCanMove(false);
 				}
 			}
 
@@ -263,6 +274,8 @@ public class CellController : MonoBehaviour
                     CopyRemote.GetComponent<DeleteController>().DeleteIt();
                 }
             }
+
+			OpenOpration = true;
 
             //稍微移动使其坐标为整数
             if (MoveCell && Moved)

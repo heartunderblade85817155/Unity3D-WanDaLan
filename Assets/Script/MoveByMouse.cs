@@ -36,6 +36,9 @@ public class MoveByMouse : MonoBehaviour
 
     void Update()
     {
-
+		if (Input.GetMouseButtonDown(0))
+		{
+			CanMove = true;
+		}
     }
 }
