@@ -7,7 +7,10 @@ public class CheckCellMove : MonoBehaviour
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-		other.transform.position += (this.transform.position - other.transform.position).normalized * 0.5f;
+		Vector3 Delta = this.transform.position - other.transform.position;
+		Vector2 Dir = new Vector2(Delta.x, Delta.y).normalized * 0.5f;
+
+		other.transform.position = new Vector3(other.transform.position.x + Dir.x, other.transform.position.y + Dir.y, other.transform.position.z);
 	}
 
 	void Start () 
