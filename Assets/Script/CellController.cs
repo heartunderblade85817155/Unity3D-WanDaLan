@@ -33,6 +33,8 @@ public class CellController : MonoBehaviour
 
 	private GameObject CircleBackGround;
 
+	public float CreateCellDis;
+
 	public void CreateCell(string CellName, bool flag = false)
 	{
 		if ((CurrentStage & 1) == 1)
