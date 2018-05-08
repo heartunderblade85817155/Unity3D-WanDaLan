@@ -27,6 +27,8 @@ public class CellController : MonoBehaviour
 
 	public Vector3 InitPos = new Vector3(0.0f, -5.0f, 1.0f);
 
+	private Vector3 CopyInitPos;
+
 	private bool OpenOpration;
 
 	public void CreateCell(string CellName)
@@ -56,7 +58,7 @@ public class CellController : MonoBehaviour
 					break;
 				}
 			}
-			ThisCell.transform.position = InitPos;
+			ThisCell.transform.position = CopyInitPos;
 		}
 		else
 		{
@@ -73,7 +75,7 @@ public class CellController : MonoBehaviour
                 ThisChild.name = (CellNum * 2 - 1).ToString();
                 ThisChild.GetComponent<SpriteRenderer>().sortingOrder = CellNum;
 
-                NewCell.transform.position = InitPos;
+                NewCell.transform.position = CopyInitPos;
                 NewCell.tag = "TheCell";
 
 				//加入到缓存池中
@@ -133,6 +135,8 @@ public class CellController : MonoBehaviour
         Moved = false;
 
         PreMousePos = Vector3.zero;
+
+		CopyInitPos = InitPos;
 
 		CreateCell(CellName);
 	}
@@ -267,6 +271,7 @@ public class CellController : MonoBehaviour
             {
                 if (CopyRemote.GetComponent<CopyController>())
                 {
+					CopyInitPos = CopyRemote.transform.parent.parent.parent.position;
                     CopyRemote.GetComponent<CopyController>().CreateIt();
                 }
                 else if (CopyRemote.GetComponent<DeleteController>())
