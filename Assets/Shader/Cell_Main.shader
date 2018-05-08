@@ -5,6 +5,8 @@
 		_MainTex ("Texture", 2D) = "white" {}
 		_StencilValue ("StencilValue", int) = 0
 		_BlendAlpha ("Alpha", float) = 1
+		_NoiseMap ("NoiseMap", 2D) = "white" {}
+		_NoiseCoefficient ("NoiseCoefficient", Float) = 0
 	}
 	SubShader
 	{
@@ -41,6 +43,10 @@
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			sampler2D _NoiseMap;
+			float4 _NoiseMap_ST;
+
+			float _NoiseCoefficient;
 			float _BlendAlpha;
 			
 			v2f vert (appdata v)
@@ -58,6 +64,11 @@
 				{
 					discard;
 				}
+
+				fixed4 Noise = tex2D(_NoiseMap, i.uv);
+
+				clip(Noise.r - _NoiseCoefficient);
+
 
 				col.a = _BlendAlpha;
 

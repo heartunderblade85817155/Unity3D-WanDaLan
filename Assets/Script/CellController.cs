@@ -34,6 +34,12 @@ public class CellController : MonoBehaviour
 	private GameObject CircleBackGround;
 
 	public float CreateCellDis;
+	private bool BeginCreate;
+	private bool BeginDelete;
+
+	private int TheDeleteNumber;
+	public float DeleteTime = 0.5f;
+	private float DeleteTotalTime = 0.0f;
 
 	public void CreateCell(string CellName, bool flag = false)
 	{
@@ -66,6 +72,8 @@ public class CellController : MonoBehaviour
 
 			if (!flag)
 				CircleBackGround.GetComponent<CopyCellDynamic>().SetNewCell(ThisCell);
+
+			BeginCreate = false;
 		}
 		else
 		{
@@ -87,6 +95,8 @@ public class CellController : MonoBehaviour
 
 				if (!flag)
 					CircleBackGround.GetComponent<CopyCellDynamic>().SetNewCell(NewCell);
+
+				BeginCreate = false;
 
 				//加入到缓存池中
 				CellList.Add(NewCell);
@@ -114,9 +124,8 @@ public class CellController : MonoBehaviour
 			{
 				if (CellList[i].Equals(DelCell))
 				{
-                    CellList[i].GetComponent<MoveByMouse>().SetCanMove(true);
-                    CellList[i].SetActive(false);
-                    CellNum--;
+					TheDeleteNumber = i;
+					BeginDelete = true;
 					break;
 				}
 			}
@@ -151,6 +160,10 @@ public class CellController : MonoBehaviour
 		CopyInitPos = InitPos;
 
 		CreateCell(CellName, true);
+
+		BeginCreate = false;
+
+		BeginDelete = false;
 
 		CircleBackGround = GameObject.Find("BG_Circle").gameObject;
 	}
@@ -200,6 +213,31 @@ public class CellController : MonoBehaviour
 
 	void Update () 
 	{
+		if (BeginCreate)
+		{
+			return;
+		}
+
+		if (BeginDelete)
+		{
+			if (DeleteTotalTime < DeleteTime)
+			{
+				DeleteTotalTime += Time.deltaTime;
+				CellList[TheDeleteNumber].GetComponent<SpriteRenderer>().material.SetFloat("_NoiseCoefficient", DeleteTotalTime / DeleteTime);
+			}
+			else
+			{
+				CellList[TheDeleteNumber].GetComponent<MoveByMouse>().SetCanMove(true);
+                CellList[TheDeleteNumber].SetActive(false);
+				CellList[TheDeleteNumber].GetComponent<SpriteRenderer>().material.SetFloat("_NoiseCoefficient", 0.0f);
+                CellNum--;
+
+				BeginDelete = false;
+				DeleteTotalTime = 0.0f;
+			}
+			return;
+		}
+
 		CurrentStage = this.GetComponent<GameController>().GetCurrentStage();
 
 		if ((CurrentStage & 1) == 1)
@@ -287,12 +325,16 @@ public class CellController : MonoBehaviour
                 {
 					CopyInitPos = CopyRemote.transform.parent.parent.parent.position;
 
+					BeginCreate = true;
+
 					CircleBackGround.GetComponent<CopyCellDynamic>().SetUseMetaBall(true, CopyInitPos, CopyInitPos + new Vector3(3.5f, 0.0f, 0.0f), CopyRemote);
 
 					CopyInitPos += new Vector3(3.5f, 0.0f, 0.0f);
                 }
                 else if (CopyRemote.GetComponent<DeleteController>())
                 {
+					BeginDelete = true;
+
                     CopyRemote.GetComponent<DeleteController>().DeleteIt();
                 }
             }

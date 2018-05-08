@@ -107,10 +107,6 @@ public class CopyCellDynamic : MonoBehaviour
                 {
                     HideOrShowTotalTime += Time.deltaTime;
 
-                    GameObject[] Cells = new GameObject[5];
-
-                    Cells = GameObject.FindGameObjectsWithTag("TheCell");
-
                     OldCell.GetComponent<SpriteRenderer>().material.SetFloat("_BlendAlpha", Mathf.Clamp(HideOrShowTotalTime / HideOrShowTime, 0.0f, 1.0f));
 					NewCell.GetComponent<SpriteRenderer>().material.SetFloat("_BlendAlpha", Mathf.Clamp(HideOrShowTotalTime / HideOrShowTime, 0.0f, 1.0f));
                 }

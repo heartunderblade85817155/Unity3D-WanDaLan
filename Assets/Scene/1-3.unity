@@ -231,8 +231,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CopyTime: 2
   HideOrShowTime: 0.5
-  Radius: 2
-  Threshold: 2.4
+  Radius: 4
+  Threshold: 4
   CellMetaColor: {r: 0.9725491, g: 0.6784314, b: 0.654902, a: 0}
 --- !u!1001 &632232132
 Prefab:
