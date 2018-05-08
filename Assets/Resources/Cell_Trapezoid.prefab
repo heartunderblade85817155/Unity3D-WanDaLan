@@ -588,6 +588,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 783f415fed23d954c86dd585398008ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InitPos: {x: 0, y: -5, z: -1}
+  MaxDis: 4
 --- !u!114 &114633204789476276
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -82,8 +82,6 @@ public class GameController : MonoBehaviour
 
 			for (int i = 1; i < CellList.Count; ++i)
 			{
-				Debug.Log(CellList[0].name + "asdasdasd" + CellList[i].name);
-
 				Vector3 tmp = CellList[i].transform.position - CellList[0].transform.position;
 
 				for (int j = 0; j < HowToWin.Count; ++j)
