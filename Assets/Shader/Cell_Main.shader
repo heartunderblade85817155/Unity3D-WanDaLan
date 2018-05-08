@@ -4,6 +4,7 @@
 	{
 		_MainTex ("Texture", 2D) = "white" {}
 		_StencilValue ("StencilValue", int) = 0
+		_BlendAlpha ("Alpha", float) = 1
 	}
 	SubShader
 	{
@@ -40,6 +41,7 @@
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			float _BlendAlpha;
 			
 			v2f vert (appdata v)
 			{
@@ -52,10 +54,13 @@
 			fixed4 frag (v2f i) : SV_Target
 			{
 				fixed4 col = tex2D(_MainTex, i.uv);
-				if (col.a == 0)
+				if (col.a <= 0.5f)
 				{
 					discard;
 				}
+
+				col.a = _BlendAlpha;
+
 				return col;
 			}
 			ENDCG

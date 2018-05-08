@@ -31,7 +31,9 @@ public class CellController : MonoBehaviour
 
 	private bool OpenOpration;
 
-	public void CreateCell(string CellName)
+	private GameObject CircleBackGround;
+
+	public void CreateCell(string CellName, bool flag = false)
 	{
 		if ((CurrentStage & 1) == 1)
 		{
@@ -59,6 +61,9 @@ public class CellController : MonoBehaviour
 				}
 			}
 			ThisCell.transform.position = CopyInitPos;
+
+			if (!flag)
+				CircleBackGround.GetComponent<CopyCellDynamic>().SetNewCell(ThisCell);
 		}
 		else
 		{
@@ -74,14 +79,19 @@ public class CellController : MonoBehaviour
                 GameObject ThisChild = NewCell.transform.Find("1").gameObject;
                 ThisChild.name = (CellNum * 2 - 1).ToString();
                 ThisChild.GetComponent<SpriteRenderer>().sortingOrder = CellNum;
-
+				
                 NewCell.transform.position = CopyInitPos;
                 NewCell.tag = "TheCell";
+
+				if (!flag)
+					CircleBackGround.GetComponent<CopyCellDynamic>().SetNewCell(NewCell);
 
 				//加入到缓存池中
 				CellList.Add(NewCell);
             }
 		}
+
+
 	}
 
 	public void DeleteCell(GameObject DelCell)
@@ -138,7 +148,9 @@ public class CellController : MonoBehaviour
 
 		CopyInitPos = InitPos;
 
-		CreateCell(CellName);
+		CreateCell(CellName, true);
+
+		CircleBackGround = GameObject.Find("BG_Circle").gameObject;
 	}
 	
 	private float GetRound(float Pos)
@@ -272,7 +284,10 @@ public class CellController : MonoBehaviour
                 if (CopyRemote.GetComponent<CopyController>())
                 {
 					CopyInitPos = CopyRemote.transform.parent.parent.parent.position;
-                    CopyRemote.GetComponent<CopyController>().CreateIt();
+
+					CircleBackGround.GetComponent<CopyCellDynamic>().SetUseMetaBall(true, CopyInitPos, CopyInitPos + new Vector3(3.5f, 0.0f, 0.0f), CopyRemote);
+
+					CopyInitPos += new Vector3(3.5f, 0.0f, 0.0f);
                 }
                 else if (CopyRemote.GetComponent<DeleteController>())
                 {
