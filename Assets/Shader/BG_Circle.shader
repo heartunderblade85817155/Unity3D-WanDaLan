@@ -63,6 +63,21 @@ Shader "Unlit/BG_Circle"
 
 				return o;
 			}
+
+			float GetEnergy(in float3 Origin, in float3 WorldPos)
+			{
+				float2 Dir = WorldPos.xy - Origin.xy;
+				Dir = normalize(Dir);
+
+				float Cos = abs(dot(Dir, float2(1.0f, 0.0f)));
+				float Sin = abs(sqrt(1 - Cos * Cos));
+
+				float xishu = (Cos + Sin);
+
+				float Energy = (_Radius * _Radius) / ((pow((Origin.x - WorldPos.x), 2) + pow((Origin.y - WorldPos.y), 2)) * xishu * xishu);
+
+				return Energy;
+			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
@@ -73,8 +88,12 @@ Shader "Unlit/BG_Circle"
 					discard;
 				}
 
-				float Energy = (_Radius * _Radius) / (pow((_OldCellPos.x - i.worldVertex.x), 2) + pow((_OldCellPos.y - i.worldVertex.y), 2));
-				Energy += (_Radius * _Radius) / (pow((_NewCellPos.x - i.worldVertex.x), 2) + pow((_NewCellPos.y - i.worldVertex.y), 2));
+				//float Energy = (_Radius * _Radius) / (pow((_OldCellPos.x - i.worldVertex.x), 2) + pow((_OldCellPos.y - i.worldVertex.y), 2));
+				//Energy += (_Radius * _Radius) / (pow((_NewCellPos.x - i.worldVertex.x), 2) + pow((_NewCellPos.y - i.worldVertex.y), 2));
+
+				//尝试制作菱形
+				float Energy = GetEnergy(_OldCellPos.xyz, i.worldVertex.xyz);
+				Energy += GetEnergy(_NewCellPos.xyz, i.worldVertex.xyz);
 
 				if (Energy >= _Threshold)
 				{
