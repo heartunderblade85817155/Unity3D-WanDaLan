@@ -41,6 +41,8 @@ public class CellController : MonoBehaviour
     public float DeleteTime = 0.5f;
     private float DeleteTotalTime = 0.0f;
 
+    public int XingZhuangIndex;
+
     public void CreateCell(string CellName, bool flag = false)
     {
         if ((CurrentStage & 1) == 1)
@@ -83,9 +85,10 @@ public class CellController : MonoBehaviour
             {
                 CellNum++;
 
+                //更改主细胞名字
                 NewCell.name = (CellNum * 2 - 2).ToString();
                 NewCell.GetComponent<SpriteRenderer>().sortingOrder = CellNum;
-
+                //更改子细胞名字
                 GameObject ThisChild = NewCell.transform.Find("1").gameObject;
                 ThisChild.name = (CellNum * 2 - 1).ToString();
                 ThisChild.GetComponent<SpriteRenderer>().sortingOrder = CellNum;
@@ -327,7 +330,7 @@ public class CellController : MonoBehaviour
 
                     BeginCreate = true;
 
-                    CircleBackGround.GetComponent<CopyCellDynamic>().SetUseMetaBall(true, CopyInitPos, CopyInitPos + new Vector3(3.5f, 0.0f, 0.0f), CopyRemote);
+                    CircleBackGround.GetComponent<CopyCellDynamic>().SetUseMetaBall(true, CopyInitPos, CopyInitPos + new Vector3(3.5f, 0.0f, 0.0f), CopyRemote, XingZhuangIndex);
 
                     CopyInitPos += new Vector3(3.5f, 0.0f, 0.0f);
                 }

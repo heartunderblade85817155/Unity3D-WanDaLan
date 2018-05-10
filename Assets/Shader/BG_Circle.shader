@@ -10,6 +10,8 @@ Shader "Unlit/BG_Circle"
 		_Threshold ("ThresholdValue", Float) = 2
 		_Radius ("Radius", Float) = 3
 		_MetaBallColor ("MetaBallColor", Color) = (0.3, 0.6, 0.9, 1.0)
+		_XingZhuang ("XingZhuang", int) = 1
+		_Bigger ("BecomeBigger", float) = 1
 	}
 	SubShader
 	{
@@ -53,6 +55,8 @@ Shader "Unlit/BG_Circle"
 			float _Threshold;
 			float _Radius;
 			fixed4 _MetaBallColor;
+			int _XingZhuang;
+			float _Bigger;
 			
 			v2f vert (appdata v)
 			{
@@ -64,17 +68,22 @@ Shader "Unlit/BG_Circle"
 				return o;
 			}
 
-			float GetEnergy(in float3 Origin, in float3 WorldPos)
+			float GetEnergy(in float3 Origin, in float3 WorldPos, in int XingZhuang)
 			{
 				float2 Dir = WorldPos.xy - Origin.xy;
 				Dir = normalize(Dir);
 
-				float Cos = abs(dot(Dir, float2(1.0f, 0.0f)));
-				float Sin = abs(sqrt(1 - Cos * Cos));
-
-				float xishu = (Cos + Sin);
-
-				float Energy = (_Radius * _Radius) / ((pow((Origin.x - WorldPos.x), 2) + pow((Origin.y - WorldPos.y), 2)) * xishu * xishu);
+				float Cos, Sin;
+				float XiShu, Energy;
+				
+				// 计算菱形
+				if (XingZhuang == 1)
+				{
+					Cos = abs(dot(Dir, float2(1.0f, 0.0f)));
+					Sin = abs(sqrt(1 - Cos * Cos));
+					XiShu = (Cos + Sin);
+					Energy = (_Radius * _Radius) / ((pow((Origin.x - WorldPos.x), 2) + pow((Origin.y - WorldPos.y), 2)) * XiShu * XiShu);
+				}
 
 				return Energy;
 			}
@@ -88,14 +97,10 @@ Shader "Unlit/BG_Circle"
 					discard;
 				}
 
-				//float Energy = (_Radius * _Radius) / (pow((_OldCellPos.x - i.worldVertex.x), 2) + pow((_OldCellPos.y - i.worldVertex.y), 2));
-				//Energy += (_Radius * _Radius) / (pow((_NewCellPos.x - i.worldVertex.x), 2) + pow((_NewCellPos.y - i.worldVertex.y), 2));
+				float Energy = GetEnergy(_OldCellPos.xyz, i.worldVertex.xyz, _XingZhuang);
+				Energy += GetEnergy(_NewCellPos.xyz, i.worldVertex.xyz, _XingZhuang);
 
-				//尝试制作菱形
-				float Energy = GetEnergy(_OldCellPos.xyz, i.worldVertex.xyz);
-				Energy += GetEnergy(_NewCellPos.xyz, i.worldVertex.xyz);
-
-				if (Energy >= _Threshold)
+				if (Energy >= (_Threshold - _Bigger))
 				{
 					col = _MetaBallColor;
 				}

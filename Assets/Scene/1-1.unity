@@ -129,11 +129,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80393be579589bd4e8034699a0f182b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CopyTime: 2
-  HideOrShowTime: 0.2
+  CopyTime: 0.5
+  HideOrShowTime: 0.1
   Radius: 1.45
   Threshold: 1.25
   CellMetaColor: {r: 0.9725491, g: 0.6784314, b: 0.654902, a: 0}
+  BiggerXiShu: 0.3
 --- !u!1 &357043304
 GameObject:
   m_ObjectHideFlags: 0

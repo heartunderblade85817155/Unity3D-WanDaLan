@@ -32,7 +32,11 @@ public class CopyCellDynamic : MonoBehaviour
 	private GameObject OldCell;
 	private GameObject NewCell;
 
-    public void SetUseMetaBall(bool flag, Vector2 Origin, Vector2 Final, GameObject Remote)
+    private int TheXingZhuang;
+    public float BiggerXiShu;
+
+    //调用MetaBall效果
+    public void SetUseMetaBall(bool flag, Vector2 Origin, Vector2 Final, GameObject Remote, int XingZhuang)
     {
         UseDynamicMetaBall = flag;
 
@@ -43,6 +47,10 @@ public class CopyCellDynamic : MonoBehaviour
         CopyRemote = Remote;
 
 		OldCell = Remote.transform.parent.parent.parent.gameObject;
+
+        TheXingZhuang = XingZhuang;
+
+        CircleMaterial.SetInt("_XingZhuang", TheXingZhuang);
     }
 
 	public void SetNewCell(GameObject TheCell)
@@ -70,6 +78,7 @@ public class CopyCellDynamic : MonoBehaviour
             {
 				CircleMaterial.SetVector("_OldCellPos", new Vector4(OriginPos.x, OriginPos.y, 1.0f, 1.0f));
                 CircleMaterial.SetVector("_NewCellPos", new Vector4(OriginPos.x, OriginPos.y, 1.0f, 1.0f));
+                CircleMaterial.SetFloat("_Bigger", 0.0f);
 
                 if (HideOrShowTotalTime < HideOrShowTime)
                 {
@@ -93,6 +102,7 @@ public class CopyCellDynamic : MonoBehaviour
 
                     CircleMaterial.SetVector("_OldCellPos", new Vector4(OriginPos.x, OriginPos.y, 1.0f, 1.0f));
                     CircleMaterial.SetVector("_NewCellPos", new Vector4(NewCellCurrentPos.x, NewCellCurrentPos.y, 1.0f, 1.0f));
+                    CircleMaterial.SetFloat("_Bigger", (CopyTotalTime / CopyTime) * BiggerXiShu);
                 }
                 else 
                 {

@@ -11,6 +11,8 @@ public class CopyUIController : MonoBehaviour
 	{
 		ControlUI = this.transform.Find("kuang").gameObject;
 
+		ControlUI.SetActive(false);
+
 		Father = this.transform.parent.gameObject;
 	}
 	
