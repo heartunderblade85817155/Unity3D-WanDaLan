@@ -349,6 +349,7 @@ public class CellController : MonoBehaviour
                             if (hit[i].collider.gameObject.name.Equals("NoCenterCircle"))
                             {
                                 CopyDis = (hit[i].distance - CellMaxRadius * 3) > 0.0f ? CellMaxRadius * 2 : hit[i].distance * 2.0f - CellMaxRadius * 3.0f - 0.5f;
+                                break;
                             }
                         }
                     }
