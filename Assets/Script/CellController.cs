@@ -339,14 +339,17 @@ public class CellController : MonoBehaviour
                         Direction = new Vector2(1.0f, 0.0f);
                     }
 
-                    RaycastHit2D hit = Physics2D.Raycast(CopyInitPos, Direction);
+                    RaycastHit2D[] hit = Physics2D.RaycastAll(CopyInitPos, Direction);
 
                     float CopyDis = CellMaxRadius * 2.0f;
-                    if (hit)
+                    if (hit.Length > 0)
                     {
-                        if (hit.collider.gameObject.name.Equals("NoCenterCircle"))
+                        for (int i = 0; i < hit.Length; ++i)
                         {
-                            CopyDis = (hit.distance - CellMaxRadius * 2) > 0.0f ? CellMaxRadius * 2 : hit.distance - CellMaxRadius * 2 - 0.5f; 
+                            if (hit[i].collider.gameObject.name.Equals("NoCenterCircle"))
+                            {
+                                CopyDis = (hit[i].distance - CellMaxRadius * 3) > 0.0f ? CellMaxRadius * 2 : hit[i].distance * 2.0f - CellMaxRadius * 3.0f - 0.5f;
+                            }
                         }
                     }
 

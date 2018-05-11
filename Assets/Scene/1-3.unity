@@ -229,11 +229,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80393be579589bd4e8034699a0f182b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CopyTime: 2
-  HideOrShowTime: 0.5
-  Radius: 4
-  Threshold: 4
+  CopyTime: 1
+  HideOrShowTime: 0.1
+  Threshold: 1.25
   CellMetaColor: {r: 0.9725491, g: 0.6784314, b: 0.654902, a: 0}
+  BiggerXiShu: 0.3
+  SmallCircleShape:
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  SmallCirclesPos:
+  - {x: 0, y: 0}
+  - {x: 4, y: 0}
+  - {x: -4, y: 0}
+  - {x: 0, y: 4}
+  - {x: 0, y: -4}
+  SmallCircleRadius:
+  - 4
+  - 0.2
+  - 0.2
+  - 0.2
+  - 0.2
 --- !u!1001 &632232132
 Prefab:
   m_ObjectHideFlags: 0
@@ -392,6 +410,11 @@ Prefab:
         type: 2}
       propertyPath: NextMission
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114512505849518492, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: CellMaxRadius
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e1849e39ba65fdb49ad43a41c5367eb5, type: 2}
