@@ -223,7 +223,7 @@ Prefab:
     - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
         type: 2}
       propertyPath: WeiTiao.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
         type: 2}
