@@ -21,7 +21,6 @@ public class CopyCellDynamic : MonoBehaviour
 
     private Material CircleMaterial;
 
-    public float Radius;
     public float Threshold;
     public Color CellMetaColor;
 
@@ -29,45 +28,44 @@ public class CopyCellDynamic : MonoBehaviour
 
     private int Stage;
 
-	private GameObject OldCell;
-	private GameObject NewCell;
-
-    private int TheXingZhuang;
+    private GameObject OldCell;
+    private GameObject NewCell;
     public float BiggerXiShu;
 
+    public List<float> SmallCircleShape = new List<float>();
+    public List<Vector2> SmallCirclesPos = new List<Vector2>();
+    public List<float> SmallCircleRadius = new List<float>();
+
+    private List<Vector4> CurrentSmallCirclePos = new List<Vector4>();
+
     //调用MetaBall效果
-    public void SetUseMetaBall(bool flag, Vector2 Origin, Vector2 Final, GameObject Remote, int XingZhuang)
+    public void SetUseMetaBall(bool flag, Vector2 Origin, Vector2 Final, GameObject Remote)
     {
         UseDynamicMetaBall = flag;
-
         OriginPos = Origin;
         FinalPos = Final;
-        NewCellCurrentPos = Origin;
-
         CopyRemote = Remote;
+        OldCell = Remote.transform.parent.parent.parent.gameObject;
 
-		OldCell = Remote.transform.parent.parent.parent.gameObject;
-
-        TheXingZhuang = XingZhuang;
-
-        CircleMaterial.SetInt("_XingZhuang", TheXingZhuang);
+        CircleMaterial.SetFloat("_Threshold", Threshold);
+        CircleMaterial.SetColor("_MetaBallColor", CellMetaColor);
+        CircleMaterial.SetInt("_SmallCircleNum", SmallCirclesPos.Count);
+        CircleMaterial.SetFloatArray("_CellRadius" ,SmallCircleRadius);
+        CircleMaterial.SetFloatArray("_CellShapes" ,SmallCircleShape);
     }
 
-	public void SetNewCell(GameObject TheCell)
-	{
-		NewCell = TheCell;
+    public void SetNewCell(GameObject TheCell)
+    {
+        NewCell = TheCell;
 
-		NewCell.GetComponent<SpriteRenderer>().material.SetFloat("_BlendAlpha", 0.0f);
-	}
+        NewCell.GetComponent<SpriteRenderer>().material.SetFloat("_BlendAlpha", 0.0f);
+    }
 
     void Start()
     {
         Stage = 0;
 
         CircleMaterial = this.gameObject.GetComponent<SpriteRenderer>().material;
-        CircleMaterial.SetFloat("_Threshold", Threshold);
-        CircleMaterial.SetFloat("_Radius", Radius);
-        CircleMaterial.SetColor("_MetaBallColor", CellMetaColor);
     }
 
     void Update()
@@ -76,9 +74,17 @@ public class CopyCellDynamic : MonoBehaviour
         {
             if ((Stage & 1) == 0)
             {
-				CircleMaterial.SetVector("_OldCellPos", new Vector4(OriginPos.x, OriginPos.y, 1.0f, 1.0f));
-                CircleMaterial.SetVector("_NewCellPos", new Vector4(OriginPos.x, OriginPos.y, 1.0f, 1.0f));
-                CircleMaterial.SetFloat("_Bigger", 0.0f);
+                if (HideOrShowTotalTime.Equals(0.0f))
+                {
+                    CurrentSmallCirclePos.Clear();
+                    for (int i = 0; i < SmallCirclesPos.Count; ++i)
+                    {
+                        CurrentSmallCirclePos.Add(new Vector4(OriginPos.x + SmallCirclesPos[i].x, OriginPos.y + SmallCirclesPos[i].y, 
+                                                                OriginPos.x + SmallCirclesPos[i].x, OriginPos.y + SmallCirclesPos[i].y));
+                    }
+                    CircleMaterial.SetVectorArray("_OldAndNewCellsPos", CurrentSmallCirclePos);
+                    CircleMaterial.SetFloat("_Bigger", 0.0f);
+                }
 
                 if (HideOrShowTotalTime < HideOrShowTime)
                 {
@@ -100,11 +106,16 @@ public class CopyCellDynamic : MonoBehaviour
                     CopyTotalTime += Time.deltaTime;
                     NewCellCurrentPos = OriginPos + (FinalPos - OriginPos) * (CopyTotalTime / CopyTime);
 
-                    CircleMaterial.SetVector("_OldCellPos", new Vector4(OriginPos.x, OriginPos.y, 1.0f, 1.0f));
-                    CircleMaterial.SetVector("_NewCellPos", new Vector4(NewCellCurrentPos.x, NewCellCurrentPos.y, 1.0f, 1.0f));
+                    CurrentSmallCirclePos.Clear();
+                    for (int i = 0; i < SmallCirclesPos.Count; ++i)
+                    {
+                        CurrentSmallCirclePos.Add(new Vector4(OriginPos.x + SmallCirclesPos[i].x, OriginPos.y + SmallCirclesPos[i].y, NewCellCurrentPos.x + SmallCirclesPos[i].x, NewCellCurrentPos.y + SmallCirclesPos[i].y));
+                    }
+                    CircleMaterial.SetVectorArray("_OldAndNewCellsPos", CurrentSmallCirclePos);
+
                     CircleMaterial.SetFloat("_Bigger", (CopyTotalTime / CopyTime) * BiggerXiShu);
                 }
-                else 
+                else
                 {
                     Stage |= 1 << 1;
                     CopyTotalTime = 0.0f;
@@ -117,23 +128,24 @@ public class CopyCellDynamic : MonoBehaviour
                 {
                     HideOrShowTotalTime += Time.deltaTime;
 
-                    OldCell.GetComponent<SpriteRenderer>().material.SetFloat("_BlendAlpha", Mathf.Clamp(HideOrShowTotalTime / HideOrShowTime, 0.0f, 1.0f));
-					NewCell.GetComponent<SpriteRenderer>().material.SetFloat("_BlendAlpha", Mathf.Clamp(HideOrShowTotalTime / HideOrShowTime, 0.0f, 1.0f));
+                    float TmpAlpha = Mathf.Clamp(HideOrShowTotalTime / HideOrShowTime, 0.0f, 1.0f);
+                    OldCell.GetComponent<SpriteRenderer>().material.SetFloat("_BlendAlpha", TmpAlpha);
+                    NewCell.GetComponent<SpriteRenderer>().material.SetFloat("_BlendAlpha", TmpAlpha);
                 }
-                else 
+                else
                 {
                     Stage = 0;
                     HideOrShowTotalTime = 0.0f;
-                    CircleMaterial.SetVector("_OldCellPos", new Vector4(-100.0f, -100.0f, 1.0f, 1.0f));
-                    CircleMaterial.SetVector("_NewCellPos", new Vector4(-100.0f, -100.0f, 1.0f, 1.0f));
+                    CurrentSmallCirclePos.Clear();
+                    for (int i = 0; i < SmallCirclesPos.Count; ++i)
+                    {
+                        CurrentSmallCirclePos.Add(new Vector4(-100.0f, -100.0f, -100.0f, -100.0f));
+                    }
+                    CircleMaterial.SetVectorArray("_OldAndNewCellsPos", CurrentSmallCirclePos);
                     UseDynamicMetaBall = false;
                 }
             }
-
         }
 
-        CircleMaterial.SetFloat("_Threshold", Threshold);
-        CircleMaterial.SetFloat("_Radius", Radius);
-        CircleMaterial.SetColor("_MetaBallColor", CellMetaColor);
     }
 }

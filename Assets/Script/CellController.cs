@@ -33,7 +33,6 @@ public class CellController : MonoBehaviour
 
     private GameObject CircleBackGround;
 
-    public float CreateCellDis;
     private bool BeginCreate;
     private bool BeginDelete;
 
@@ -41,7 +40,8 @@ public class CellController : MonoBehaviour
     public float DeleteTime = 0.5f;
     private float DeleteTotalTime = 0.0f;
 
-    public int XingZhuangIndex;
+    // 这一关中，该类型细胞的最大半径
+    public float CellMaxRadius;
 
     public void CreateCell(string CellName, bool flag = false)
     {
@@ -330,9 +330,29 @@ public class CellController : MonoBehaviour
 
                     BeginCreate = true;
 
-                    CircleBackGround.GetComponent<CopyCellDynamic>().SetUseMetaBall(true, CopyInitPos, CopyInitPos + new Vector3(3.5f, 0.0f, 0.0f), CopyRemote, XingZhuangIndex);
+                    Vector3 Direction = new Vector3(CopyInitPos.x - InitPos.x, CopyInitPos.y - InitPos.y, 0.0f);
 
-                    CopyInitPos += new Vector3(3.5f, 0.0f, 0.0f);
+                    Direction = -Direction;
+
+                    if (Mathf.Approximately(Direction.magnitude, 0.0f))
+                    {
+                        Direction = new Vector2(1.0f, 0.0f);
+                    }
+
+                    RaycastHit2D hit = Physics2D.Raycast(CopyInitPos, Direction);
+
+                    float CopyDis = CellMaxRadius * 2.0f;
+                    if (hit)
+                    {
+                        if (hit.collider.gameObject.name.Equals("NoCenterCircle"))
+                        {
+                            CopyDis = (hit.distance - CellMaxRadius * 2) > 0.0f ? CellMaxRadius * 2 : hit.distance - CellMaxRadius * 2 - 0.5f; 
+                        }
+                    }
+
+                    CircleBackGround.GetComponent<CopyCellDynamic>().SetUseMetaBall(true, CopyInitPos, CopyInitPos + Direction.normalized * CopyDis, CopyRemote);
+
+                    CopyInitPos += Direction.normalized * CopyDis;
                 }
                 else if (CopyRemote.GetComponent<DeleteController>())
                 {

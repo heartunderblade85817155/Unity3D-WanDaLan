@@ -5,13 +5,10 @@ Shader "Unlit/BG_Circle"
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_OldCellPos ("OldCellPos", Vector) = (-100, -100, 0, 0)
-		_NewCellPos ("NewCellPos", Vector) = (-100, -100, 0, 0)
 		_Threshold ("ThresholdValue", Float) = 2
-		_Radius ("Radius", Float) = 3
 		_MetaBallColor ("MetaBallColor", Color) = (0.3, 0.6, 0.9, 1.0)
-		_XingZhuang ("XingZhuang", int) = 1
 		_Bigger ("BecomeBigger", float) = 1
+		_SmallCircleNum ("SmallCircleNum", int) = 0
 	}
 	SubShader
 	{
@@ -50,13 +47,15 @@ Shader "Unlit/BG_Circle"
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
-			float4 _OldCellPos;
-			float4 _NewCellPos;
+
+			uniform float4 _OldAndNewCellsPos[32];
+			uniform float _CellRadius[32];
+			uniform float _CellShapes[32];
+
 			float _Threshold;
-			float _Radius;
 			fixed4 _MetaBallColor;
-			int _XingZhuang;
 			float _Bigger;
+			int _SmallCircleNum;
 			
 			v2f vert (appdata v)
 			{
@@ -68,23 +67,35 @@ Shader "Unlit/BG_Circle"
 				return o;
 			}
 
-			float GetEnergy(in float3 Origin, in float3 WorldPos, in int XingZhuang)
+			float GetEnergy(in float2 Origin, in float2 WorldPos, in float TheRadius, in float Shape)
 			{
-				float2 Dir = WorldPos.xy - Origin.xy;
+				float2 Dir = float2(WorldPos - Origin);
 				Dir = normalize(Dir);
 
 				float Cos, Sin;
 				float XiShu, Energy;
 				
-				// 计算菱形
-				if (XingZhuang == 1)
+				// 计算圆形
+				if (Shape == 0)
 				{
-					Cos = abs(dot(Dir, float2(1.0f, 0.0f)));
+					Energy = (TheRadius * TheRadius) / (pow((Origin.x - WorldPos.x), 2) + pow((Origin.y - WorldPos.y), 2));
+				}
+				// 计算菱形
+				else if (Shape == 1)
+				{
+					Cos = abs(dot(normalize(Dir.xy), float2(1.0f, 0.0f)));
 					Sin = abs(sqrt(1 - Cos * Cos));
 					XiShu = (Cos + Sin);
-					Energy = (_Radius * _Radius) / ((pow((Origin.x - WorldPos.x), 2) + pow((Origin.y - WorldPos.y), 2)) * XiShu * XiShu);
+					Energy = (TheRadius * TheRadius) / ((pow((Origin.x - WorldPos.x), 2) + pow((Origin.y - WorldPos.y), 2)) * XiShu * XiShu);
 				}
-
+				// 计算正方形
+				else if (Shape == 2)
+				{
+					Cos = dot(normalize(Dir.xy), normalize(float2(1.0f, -1.0f)));
+					Sin = abs(sqrt(1 - Cos * Cos));
+					XiShu = (abs(Cos) + Sin);
+					Energy = (TheRadius * TheRadius) / ((pow((Origin.x - WorldPos.x), 2) + pow((Origin.y - WorldPos.y), 2)) * XiShu * XiShu);
+				}
 				return Energy;
 			}
 			
@@ -97,8 +108,13 @@ Shader "Unlit/BG_Circle"
 					discard;
 				}
 
-				float Energy = GetEnergy(_OldCellPos.xyz, i.worldVertex.xyz, _XingZhuang);
-				Energy += GetEnergy(_NewCellPos.xyz, i.worldVertex.xyz, _XingZhuang);
+				float Energy = 0.0f;
+
+				for (int it = 0; it < _SmallCircleNum; ++it)
+				{
+					Energy += GetEnergy(_OldAndNewCellsPos[it].xy, i.worldVertex.xy, _CellRadius[it], _CellShapes[it]);
+					Energy += GetEnergy(_OldAndNewCellsPos[it].zw, i.worldVertex.xy, _CellRadius[it], _CellShapes[it]);
+				}
 
 				if (Energy >= (_Threshold - _Bigger))
 				{
