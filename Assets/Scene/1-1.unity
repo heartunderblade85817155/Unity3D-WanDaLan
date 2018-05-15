@@ -204,7 +204,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11
+  orthographic size: 12.3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -240,6 +240,21 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorate.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateScale.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateFinalPos.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4086431613865278, guid: e1849e39ba65fdb49ad43a41c5367eb5, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.68628854
@@ -286,6 +301,61 @@ Prefab:
         type: 2}
       propertyPath: CellMaxNum
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoPos.x
+      value: -4.299
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoPos.y
+      value: -0.726
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorate.Array.data[0]
+      value: Decorate/1/1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateScale.Array.data[0].x
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateScale.Array.data[0].y
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateFinalPos.Array.data[0].x
+      value: -0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateFinalPos.Array.data[0].y
+      value: -1.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: AutoDistance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoName
+      value: ActiveJiaHao
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e1849e39ba65fdb49ad43a41c5367eb5, type: 2}

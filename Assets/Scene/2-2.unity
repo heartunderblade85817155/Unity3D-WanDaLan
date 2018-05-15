@@ -165,7 +165,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11
+  orthographic size: 12.3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -348,6 +348,21 @@ Prefab:
       propertyPath: HowToWin.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorate.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateScale.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateFinalPos.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4086431613865278, guid: e1849e39ba65fdb49ad43a41c5367eb5, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.68628854
@@ -439,6 +454,81 @@ Prefab:
         type: 2}
       propertyPath: CellMaxRadius
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoPos.x
+      value: -4.299
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoPos.y
+      value: -0.726
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorate.Array.data[0]
+      value: Decorate/6/61
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorate.Array.data[1]
+      value: Decorate/6/62
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateScale.Array.data[0].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateScale.Array.data[0].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateScale.Array.data[1].x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateScale.Array.data[1].y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateFinalPos.Array.data[0].x
+      value: 2.137
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateFinalPos.Array.data[0].y
+      value: 1.522
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: AutoDistance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateFinalPos.Array.data[1].x
+      value: 2.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateFinalPos.Array.data[1].y
+      value: 2.91
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e1849e39ba65fdb49ad43a41c5367eb5, type: 2}

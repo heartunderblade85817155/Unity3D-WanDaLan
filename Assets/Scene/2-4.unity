@@ -249,6 +249,21 @@ Prefab:
       propertyPath: HowToWin.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorate.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateScale.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateFinalPos.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4086431613865278, guid: e1849e39ba65fdb49ad43a41c5367eb5, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.68628854
@@ -356,6 +371,56 @@ Prefab:
       propertyPath: CellMaxRadius
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoPos.x
+      value: -8.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoPos.y
+      value: -1.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: JiaHaoScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorate.Array.data[0]
+      value: Decorate/8/81
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateScale.Array.data[0].x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateScale.Array.data[0].y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateFinalPos.Array.data[0].x
+      value: 3.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: AutoDistance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265135379279872, guid: e1849e39ba65fdb49ad43a41c5367eb5,
+        type: 2}
+      propertyPath: TheDecorateFinalPos.Array.data[0].y
+      value: 3.21
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e1849e39ba65fdb49ad43a41c5367eb5, type: 2}
   m_IsPrefabParent: 0
@@ -411,7 +476,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 22
+  orthographic size: 24.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

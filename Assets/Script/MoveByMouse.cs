@@ -34,7 +34,7 @@ public class MoveByMouse : MonoBehaviour
 	{
         if (CanMove)
         {
-			if (((this.transform.position + Offset) - InitPos).magnitude > MaxDis)
+			if (((this.transform.position + Offset) - InitPos).magnitude > MaxDis && this.tag.Equals("TheCell"))
 			{
 				return;
 			}

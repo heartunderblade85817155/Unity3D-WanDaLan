@@ -7,6 +7,10 @@ TagManager:
   - TheCell
   - Copy
   - Delete
+  - JiaHao
+  - Dec
+  - DecIns
+  - GoalTarget
   layers:
   - Default
   - TransparentFX

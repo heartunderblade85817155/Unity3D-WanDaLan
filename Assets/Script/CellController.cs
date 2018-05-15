@@ -243,7 +243,7 @@ public class CellController : MonoBehaviour
 
         CurrentStage = this.GetComponent<GameController>().GetCurrentStage();
 
-        if ((CurrentStage & 1) == 1)
+        if (!((CurrentStage & 1) != 1 || (CurrentStage >> 4 & 1) != 1))
         {
             return;
         }
@@ -272,7 +272,7 @@ public class CellController : MonoBehaviour
                 Debug.Log("catch + " + hit.collider.gameObject.name);
 
                 //如果发生碰撞但是不是细胞
-                if (hit.collider.gameObject.tag.Equals("TheCell"))
+                if (hit.collider.gameObject.tag.Equals("TheCell") || hit.collider.gameObject.tag.Equals("DecIns"))
                 {
                     MoveCell = hit.collider.gameObject;
                 }
@@ -371,9 +371,12 @@ public class CellController : MonoBehaviour
             //稍微移动使其坐标为整数
             if (MoveCell && Moved)
             {
-                Vector3 CurrentPos = MoveCell.transform.position;
-                Vector3 SmallOffset = new Vector3(GetRound(CurrentPos.x), GetRound(CurrentPos.y), CurrentPos.z) - CurrentPos;
-                MoveCell.GetComponent<MoveByMouse>().SetMouseMove(SmallOffset);
+                if (!MoveCell.tag.Equals("DecIns"))
+                {
+                    Vector3 CurrentPos = MoveCell.transform.position;
+                    Vector3 SmallOffset = new Vector3(GetRound(CurrentPos.x), GetRound(CurrentPos.y), CurrentPos.z) - CurrentPos;
+                    MoveCell.GetComponent<MoveByMouse>().SetMouseMove(SmallOffset);
+                }
             }
 
             Moved = false;
